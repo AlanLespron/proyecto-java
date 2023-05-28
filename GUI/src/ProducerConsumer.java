@@ -2,16 +2,17 @@
 package producerconsumer;
 
 public class ProducerConsumer {
-
-    public static void main(String[] args) {
+    
+    private Producer _producerArr [];
+    private Consumer _consumerArr [];
+    
+    public ProdConsu(int producerSize, int consumerSize){
         
-        Buffer buffer = new Buffer();
-        
-        Producer producer = new Producer(buffer);
-        producer.start();
-        
-        Consumer consumer = new Consumer(buffer);
-        consumer.start();
+        this._producerArr = new Producer[producerSize];
+        this._consumerArr = new Consumer[consumerSize];
     }
+
+   public void processIn(){
+   }
     
 }
