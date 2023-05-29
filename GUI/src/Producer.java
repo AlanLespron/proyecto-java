@@ -1,15 +1,16 @@
 
-package producerconsumer;
-
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Producer extends Thread {
     Buffer buffer;
+    //int Minimo , Maximo;
     
     Producer(Buffer buffer) {
         this.buffer = buffer;
+        //this.Minimo = min;
+        //this.Maximo = max;
     }
     
     @Override

@@ -2,8 +2,6 @@
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import producerconsumer.Buffer;
-import producerconsumer.Producer;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,8 +15,9 @@ import producerconsumer.Producer;
 public class SchemeOp {
     
     
-    public int result,rand1,rand2;
+    public int result,rand1,rand2,Id;
     public char operator;
+    
    
     
     SchemeOp(int min ,int  max ){
@@ -28,6 +27,8 @@ public class SchemeOp {
         rand1 = r.nextInt(max-min)+ min;
         rand2 = r.nextInt(max-min)+ min;
         result = SchemeResult();
+        Id = (int) ((Math.random() * (1000 - 1)) + 1);
+
     }
     
     
@@ -54,6 +55,10 @@ public class SchemeOp {
     public String SchemeFormat(){
         
         return String.format("(%s %s %s)", operator,rand1,rand2);
+    }
+    public int GetId(){
+        return Id;
+        
     }
 }
 

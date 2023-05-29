@@ -1,5 +1,4 @@
 
-package producerconsumer;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,7 +7,7 @@ public class Buffer {
     
     private int buffer;
     
-    Buffer() {
+    Buffer(int bufferSize) {
         this.buffer = 0;
     }
     
