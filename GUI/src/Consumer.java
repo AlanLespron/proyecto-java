@@ -21,7 +21,7 @@ public class Consumer extends Thread {
             Buffer.print("Consumer consumed: " + "Id -> " + product.Id + " Op -> " + product.SchemeFormat() + " Result -> " + product.result);
         }
         try {
-            Thread.sleep(1000);
+            Thread.sleep(this.buffer.waitCons);
         } catch (InterruptedException ex) {
             Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,23 +1,27 @@
+
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author sdegante
  */
 public class GUIFrame extends javax.swing.JFrame {
-    ProducerConsumer pc ;
+
+    ProducerConsumer pc;
+
     /**
      * Creates new form GUIFrame
      */
     public GUIFrame() {
-        
+
         initComponents();
-        
+
     }
 
     /**
@@ -33,8 +37,8 @@ public class GUIFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtTiempoPro = new javax.swing.JTextField();
+        txtTiempoCons = new javax.swing.JTextField();
         txtBuffer = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtMin = new javax.swing.JTextField();
@@ -94,8 +98,8 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2)
+                    .addComponent(txtTiempoPro)
+                    .addComponent(txtTiempoCons)
                     .addComponent(spnMax, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
@@ -110,13 +114,13 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(spnProducers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTiempoPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(spnConsumers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTiempoCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
@@ -266,47 +270,63 @@ public class GUIFrame extends javax.swing.JFrame {
         int numProducers = Integer.parseInt(this.spnProducers.getValue().toString());
         int numConsumers = Integer.parseInt(this.spnConsumers.getValue().toString());
         int buffer = Integer.parseInt(this.txtBuffer.getText());
-        int min  = Integer.parseInt(this.txtMin.getText());
+        int min = Integer.parseInt(this.txtMin.getText());
         int max = Integer.parseInt(this.spnMax.getValue().toString());
-        
-        if (numProducers < 1 || numProducers > 10){
-            JOptionPane.showMessageDialog(null,"El número de productores debe estar en el rango 1-10", "ERROR", JOptionPane.ERROR_MESSAGE);
+        int prodTime = Integer.parseInt(this.txtTiempoPro.getText());
+        int consTime = Integer.parseInt(this.txtTiempoCons.getText());
+
+        if (numProducers < 1 || numProducers > 10) {
+            JOptionPane.showMessageDialog(null, "El número de productores debe estar en el rango 1-10", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (numConsumers < 1 || numConsumers > 10){
-            JOptionPane.showMessageDialog(null,"El número de consumidores debe estar en el rango 1-10", "ERROR", JOptionPane.ERROR_MESSAGE);
+        if (numConsumers < 1 || numConsumers > 10) {
+            JOptionPane.showMessageDialog(null, "El número de consumidores debe estar en el rango 1-10", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (buffer < 1 || buffer > 100){
-            JOptionPane.showMessageDialog(null,"El tamano del buffer debe estar en el rango 1-100", "ERROR", JOptionPane.ERROR_MESSAGE);
+        if (buffer < 1 || buffer > 100) {
+            JOptionPane.showMessageDialog(null, "El tamano del buffer debe estar en el rango 1-100", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (min < 0 || min > 9){
-            JOptionPane.showMessageDialog(null,"El Minimo debe estar en el rango del 0-9", "ERROR", JOptionPane.ERROR_MESSAGE);
+        if (min < 0 || min > 9) {
+            JOptionPane.showMessageDialog(null, "El Minimo debe estar en el rango del 0-9", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (max < 0 || max > 9){
-            JOptionPane.showMessageDialog(null,"El Maximo debe estar en el rango del 0-9", "ERROR", JOptionPane.ERROR_MESSAGE);
+        if (max < 0 || max > 9) {
+            JOptionPane.showMessageDialog(null, "El Maximo debe estar en el rango del 0-9", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (min > max ){
-            JOptionPane.showMessageDialog(null,"El Maximo debe ser mayor al Minimo ", "ERROR", JOptionPane.ERROR_MESSAGE);
+        if (min > max) {
+            JOptionPane.showMessageDialog(null, "El Maximo debe ser mayor al Minimo ", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-         pc = new ProducerConsumer(numProducers,numConsumers);  
-        pc.processIn(buffer, min, max,jProgressBar1, jSpinner4);// TODO add your handling code here:
+        if (prodTime <= 0 || prodTime > 10000) {
+            JOptionPane.showMessageDialog(null, "El tiempo de espera debe estar en el rando 0-10,000", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (consTime <= 0 || consTime > 10000) {
+            JOptionPane.showMessageDialog(null, "El tiempo de espera debe estar en el rando 0-10,000", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        pc = new ProducerConsumer(numProducers, numConsumers);
+        pc.processIn(buffer, min, max, prodTime, consTime);// TODO add your handling code here:
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         pc.StopAllThreads();
+        spnProducers.setValue((Integer) 0);
+        spnConsumers.setValue((Integer) 0);
+        txtBuffer.setText("0");
+        txtMin.setText("o");
+        spnMax.setValue((Integer) 0);
+        txtTiempoPro.setText("0");
+        txtTiempoCons.setText("0");
+
     }//GEN-LAST:event_jButton2ActionPerformed
-    
-    
-    
+
     /**
      * @param args the command line arguments
      */
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -360,12 +380,12 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JSpinner spnConsumers;
     private javax.swing.JSpinner spnMax;
     private javax.swing.JSpinner spnProducers;
     private javax.swing.JTextField txtBuffer;
     private javax.swing.JTextField txtMin;
+    private javax.swing.JTextField txtTiempoCons;
+    private javax.swing.JTextField txtTiempoPro;
     // End of variables declaration//GEN-END:variables
 }

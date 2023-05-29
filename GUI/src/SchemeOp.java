@@ -22,8 +22,8 @@ public class SchemeOp {
     
     SchemeOp(int min ,int  max ){
         String operators = "+-*/";
-        Random r = new Random(System.currentTimeMillis());
-        operator = operators.charAt(r.nextInt(5));
+        Random r = new Random();
+        operator = operators.charAt(r.nextInt(4));
         rand1 = r.nextInt(max-min)+ min;
         rand2 = r.nextInt(max-min)+ min;
         result = SchemeResult();
